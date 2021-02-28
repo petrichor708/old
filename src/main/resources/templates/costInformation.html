@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<title>费用信息</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+	<link rel="stylesheet" href="../static/css/mine.css" th:href="@{/css/mine.css}">
+	<script type="text/javascript" src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+	<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui small sidebar inverted vertical menu" style="font-size: medium">
+	<a style="color: #00B5AD;font-size: large" class="header item">
+		<span><i class="large loading snowflake outline icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天怡</span>
+	</a>
+	<a href="#" th:href="@{/login}" class="active teal right item"><i class="user icon"></i>后台登录</a>
+	<a style="" th:href="@{/}"  class=" item">
+		<span><i class=" large home icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span>
+	</a>
+	<a style="" th:href="@{/oldInformation}"  class=" item">
+		<span><i class=" large users icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;老人信息</span>
+	</a>
+	<a style="" th:href="@{/oldLogin}"  class=" item">
+		<span><i class=" large user plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;老人注册</span>
+	</a>
+	<a style="" th:href="@{/roomInformation}"  class=" item">
+		<span><i class=" large hotel icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;房间信息</span>
+	</a>
+	<a style="" th:href="@{/nurseInformation}"  class=" item">
+		<span><i class=" large doctor icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;护理人员</span>
+	</a>
+	<a style="" th:href="@{/nurseLogin}"  class=" item">
+		<span><i class=" large user plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加护理</span>
+	</a>
+	<a style="" th:href="@{/roomLogin}"  class=" item">
+		<span><i class=" large plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加房间</span>
+	</a>
+	<a style="" th:href="@{/costInformation}"  class="active item">
+		<span><i class=" large dollar icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费用查询</span>
+	</a>
+</div>
+<div class="pusher" th:style="@{background: url(/img/bg.jpg);}" style="background: url(../static/img/bg.jpg);">
+	<!-- 导航 -->
+	<div class="ui inverted segment m-padded-tb-tiny m-opacity-small">
+		<div class="ui container">
+			<div class="ui inverted secondary menu">
+				<a class="header item"><font style="vertical-align: inherit;"><p><font color="teal" size="5" style="vertical-align: inherit;">天怡</font>
+				</p></font></a>
+				<a id="menu" class="item"><i class="bars icon"></i>菜单</font></a>
+
+			</div>
+		</div>
+	</div>
+	<div class="m-container-tiny m-padded-tb-large stackable">
+		<div class="ui container">
+			<!--导航-->
+			<div class="ui sticky m-opacity-no">
+				<div class="ui segment m-shadow-small m-padded-tb-tiny center aligned">
+					<!--搜索-->
+					<form name="search" action="#" th:action="@{/oldSearch}" method="post">
+						<div class="ui search">
+							<span class="ui icon input">
+								<input class="prompt" name="query" type="text" placeholder="姓名 or 编号...">
+								<i onclick="loaddata()" class="search link icon"></i>
+							</span>&nbsp;&nbsp;&nbsp;
+							<a href="#" th:href="@{/costInformation}" class=""><i class="big undo teal icon"></i><font color="#00B5AD">全部</font></a>
+							<div class="results"></div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--中间部分-->
+	<div id="m-container" class="ui m-container-large m-padded-tb-big">
+		<div class="ui  segment">
+			<div th:fragment="costList" class="ui teal segment">
+				<div id="table-container">
+					<table class="ui compact  table center aligned">
+						<a href="#" th:href="@{/costInformation}" class=""><div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+							<i class="close icon"></i>
+							<div class="header">提示:</div>
+							<p th:text="${message}">恭喜，操作成功！</p>
+						</div></a>
+						<script>
+							//消息提示可关闭
+							$(".message .close")
+									.on("click",function(){
+										$(this)
+												.closest(".message")
+												.transition("fade");
+									});
+						</script>
+
+						<thead>
+						<tr>
+							<th></th>
+							<th>编号</th>
+							<th>姓名</th>
+							<th>护理费用/年</th>
+							<th>住房费用/年</th>
+							<th>其他/年</th>
+							<th>总/年</th>
+							<th>入住时间</th>
+							<th>已入住/天</th>
+							<th>上次缴费时间</th>
+							<th>需缴纳费用</th>
+							<th>总累计</th>
+							<th>操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="cost,iterStat : ${costs}">
+							<td th:text="${iterStat.count}">1</td>
+							<td th:text="${cost.id}">id</td>
+							<td th:text="${cost.name}">name</td>
+							<td th:text="${cost.nCost}">nCost</td>
+							<td th:text="${cost.rCost}">rCost</td>
+							<td th:text="${cost.extraCharges}">extraCharges</td>
+							<td th:text="${cost.nCost+cost.rCost+cost.extraCharges}">allCharges</td>
+							<td th:text="${cost.createTime}">createTime</td>
+							<td th:text="${cost.days}">days</td>
+							<td>
+								<span th:if="${cost.day}!=${cost.createTime}" th:text="${cost.day}"></span>
+								<span th:if="${cost.day}==${cost.createTime}" th:text="还在白嫖"></span>
+							</td>
+							<td th:text="${cost.allCost}">allCost</td>
+							<td th:text="${cost.allCharge}">allCharge</td>
+							<td>
+								<a href="#" id="to-zero" th:href="@{/costToZero/{id}(id=${cost.id})}" class="ui mini red basic button">缴纳清零</a>
+							</td>
+							<td class="" th:if="${message1}==${cost.id}">
+								<i class="green big check icon"></i>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- 底部 -->
+			<div class="ui   segment" >
+				<div class="ui middle aligned two column grid">
+					<div class="left aligned column">
+						<a href="#" th:href="@{/pageLast/{num}(num=${page})}" th:unless="${page}==0"
+						   class="ui min teal basic button">上一页</a>
+					</div>
+					<div class="right aligned column">
+						<a href="#" th:href="@{/pageNext/{num}(num=${page})}" th:unless="${page}==${end}"
+						   class="ui min teal basic button">下一页</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+</body>
+<script>
+	<!--局部刷新-->
+	function loaddata() {
+		$("#m-container").load("/costSearch", {
+			query: $("[name='query']").val(),
+		});
+	}
+	<!--菜单-->
+	$('#menu').click(function () {
+		$('.sidebar')
+				.sidebar({
+					transition: 'scale down'
+				})
+				.sidebar('toggle')
+		;
+	})
+
+</script>
+</html>

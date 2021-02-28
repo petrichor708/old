@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lala.yanglao.dao.NurseDao">
+    <resultMap id="BaseResultMap" type="com.lala.yanglao.model.Nurse">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="nurseId" jdbcType="VARCHAR" property="nurseId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="address" jdbcType="INTEGER" property="address"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="grade" jdbcType="INTEGER" property="grade"/>
+        <result column="describe" jdbcType="INTEGER" property="describe"/>
+        <result column="oldCount" jdbcType="INTEGER" property="oldCount"/>
+    </resultMap>
+    <resultMap id="OldsMap" type="com.lala.yanglao.model.Old">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="roomNumber" jdbcType="INTEGER" property="roomNumber"/>
+        <result column="rid" jdbcType="INTEGER" property="rid"/>
+        <result column="nid" jdbcType="INTEGER" property="nid"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="address" jdbcType="INTEGER" property="address"/>
+        <result column="nurseName" jdbcType="INTEGER" property="nurseName"/>
+        <result column="nurseNumber" jdbcType="INTEGER" property="nurseNumber"/>
+        <result column="describe" jdbcType="INTEGER" property="describe"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.id,a.nurseId, a.name,a.age, a.sex,a.price,a.number ,a.address,a.grade,a.describe,a.createTime
+    </sql>
+    <select id="selectCountOfNurses" resultType="int">
+        select
+            count(id)
+        from
+            t_nurse
+    </select>
+    <select id="selectByPrimary" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from
+            t_nurse a
+        where
+            id=#{id}
+    </select>
+    <select id="selectOldsByPrimary" resultMap="OldsMap">
+        select
+            a.id,a.name
+        from
+            t_old a
+        right join
+            t_nurse b
+        on
+            a.nid=b.id
+        where
+            b.id=#{id}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+            count(b.id)as oldCount,<include refid="Base_Column_List"/>
+        from
+             t_nurse a
+        left join
+            t_old b
+        on
+            a.id=b.nid
+        GROUP BY
+            a.nurseId
+    </select>
+    <select id="selectAllOnLimit" resultMap="BaseResultMap">
+        select
+        count(b.id)as oldCount,<include refid="Base_Column_List"/>
+        from
+        t_nurse a
+        left join
+        t_old b
+        on
+        a.id=b.nid
+        GROUP BY
+        a.nurseId
+        order by
+        a.id asc
+        limit #{num},10
+    </select>
+    <select id="selectAllByGrade" resultMap="BaseResultMap">
+        select
+            count(b.id)as oldCount,<include refid="Base_Column_List"/>
+        from
+            t_nurse a
+        left join
+            t_old b
+        on
+            a.id=b.nid
+        where
+            a.grade=#{nurseGrade}
+        GROUP BY
+            a.nurseId
+    </select>
+    <select id="selectGrades" resultMap="BaseResultMap">
+        select
+            count(a.grade)as number,a.grade
+        from
+            t_nurse a
+        group by
+            a.grade
+    </select>
+    <select id="selectByNameOrNurseId" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from
+            t_nurse a
+        where
+            a.name like "%"#{query}"%"
+        or
+            a.nurseId like "%"#{query}"%"
+    </select>
+    <insert id="insertNurse">
+        insert into
+            t_nurse (nurseId,name,age,sex,grade,price,number,address,`describe`,createTime)
+        values
+            (#{nurseId},#{name},#{age},#{sex},#{grade},#{price},#{number},#{address},#{describe},#{createTime})
+    </insert>
+    <update id="updateNurse">
+        update
+            t_nurse
+        set
+            nurseId=#{nurseId},name=#{name},age=#{age},sex=#{sex},grade=#{grade},price=#{price},number=#{number},address=#{address},`describe`=#{describe},createTime=#{createTime}
+        where
+            id=#{id}
+    </update>
+    <delete id="deleteNurse">
+        delete from
+            t_nurse
+        where
+            id=#{id}
+    </delete>
+</mapper>

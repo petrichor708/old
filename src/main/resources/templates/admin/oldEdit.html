@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>老人修改</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+	<link rel="stylesheet" href="../../static/css/mine.css" th:href="@{/css/mine.css}">
+	<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+	<script src="https://www.layuicdn.com/layui/layui.js"></script>
+	<script type="text/javascript" src="../../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+	<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+	<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<!--头部-->
+<div class="ui m-container-small m-margin-tb-large m-padded-lr-reponsive m-opacity-no m-text-spaced-big">
+	<div class="ui two pointing menu m-shadow-small ">
+		<a href="#" th:href="@{/admin/}" class="item"><i class="big home teal icon"></i><span style="color: #00B5AD; ">首页</span></a>
+		<h3 class="ui teal active header item right"><i class=" user icon"></i>老人信息修改</h3>
+	</div>
+</div></div>
+<!--中间内容-->
+<div class="ui container segment m-opacity-no m-text-spaced-big stackable">
+	<a th:href="@{/admin/oldEdit/{id}(id=${old.id})}"><div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+		<i class="close icon"></i>
+		<div class="header">提示:</div>
+		<p th:text="${message}">恭喜，操作成功！</p>
+	</div></a>
+	<div class="ui teal segment">
+		<form class="ui form" method="post" action="#" th:action="@{/admin/oldUpdate}">
+			<input type="hidden" name="id" th:value="${old.id}">
+			<div class="field">
+				<label>姓名</label>
+				<input type="text" name="name" placeholder="姓名" th:value="${old.name}">
+			</div>
+			<div class="two fields">
+				<div class="field">
+					<!--性别-->
+					<label>性别</label>
+					<div class="ui selection dropdown">
+						<input type="hidden" name="sex" th:value="${old.sex}">
+						<i class="dropdown icon"></i>
+						<div class="default text">性别</div>
+						<div class="menu">
+							<div class="item" data-value="男">男</div>
+							<div class="item" data-value="女">女</div>
+						</div>
+					</div>
+				</div>
+				<div class="field right">
+					<!--年龄-->
+					<label>年龄</label>
+					<div class="ui selection dropdown">
+						<input type="hidden" name="age" th:value="${old.age}">
+						<i class="dropdown icon"></i>
+						<div class="default text">年龄</div>
+						<div class="menu">
+							<div class="item" data-value="<50"><50</div>
+							<div class="item" data-value="50-54">50-54</div>
+							<div class="item" data-value="55-59">55-59</div>
+							<div class="item" data-value="60-64">60-64</div>
+							<div class="item" data-value="65-69">65-69</div>
+							<div class="item" data-value="70-74">70-74</div>
+							<div class="item" data-value="75-79">75-79</div>
+							<div class="item" data-value="80-84">80-84</div>
+							<div class="item" data-value="85-89">85-89</div>
+							<div class="item" data-value="90-94">90-94</div>
+							<div class="item" data-value="95-99">95-99</div>
+							<div class="item" data-value="99+">99+</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--联系人电话-->
+			<div class="field">
+				<label>监护人电话(只能是数字)</label>
+				<input type="text" name="number" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="11" placeholder="电话" th:value="${old.number}">
+			</div>
+
+			<!--家庭住址-->
+			<div class="field">
+				<label>家庭住址</label>
+				<input type="text" name="address" maxlength="100" placeholder="地址" th:value="${old.address}">
+			</div>
+			<!--健康评分-->
+			<div class="field">
+				<label>健康评分(只能是0-100数字)</label>
+				<input type="text" name="status" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="3" placeholder="健康评分" th:value="${old.status}">
+			</div>
+			<!--选择护理人员-->
+			<div class="field">
+				<label>护理人员</label>
+				<div class="ui fluid selection dropdown">
+					<input type="hidden" name="nid" th:value="${old.nid}">
+					<i class="dropdown icon"></i>
+					<div class="default text">护理人员</div>
+					<div class="menu">
+						<div class="item ui stackable" th:data-value="${nurse.id}" th:each="nurse:${nurses}">
+							<i class="doctor teal icon"></i>
+							<img class="ui mini avatar image" src="https://picsum.photos/100/100">
+							<font th:text="${nurse.name}"></font>&nbsp;&nbsp;&nbsp;&nbsp;
+							已负责&nbsp;<font size="5" color="red" th:text="${nurse.oldCount}"></font>&nbsp;人&nbsp;&nbsp;&nbsp;&nbsp;
+							评分：<span class="ui star rating" th:data-rating="${nurse.grade}" data-max-rating="5"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+							价格：&nbsp;<font size="4" color="orange" th:text="${nurse.price}"></font>&nbsp;元/月&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述：<font size="3" color="teal" th:text="${nurse.describe}"></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="field">
+				<label>房间</label>
+				<div class="ui fluid selection dropdown">
+					<input type="hidden" name="rid" th:value="${old.rid}">
+					<i class="dropdown icon"></i>
+					<div class="default text">房间</div>
+					<div class="menu">
+						<div class="item ui stackable" th:data-value="${room.id}" th:each="room:${rooms}">
+							<i class="hotel teal icon"></i>
+							<img class="ui mini avatar image" src="https://picsum.photos/100/100">
+							<font th:text="${room.roomNumber}"></font>&nbsp;&nbsp;&nbsp;&nbsp;
+							房间类型&nbsp;<font size="5" color="red" th:text="${room.roomType}"></font>&nbsp;人房&nbsp;&nbsp;&nbsp;&nbsp;
+							已入住&nbsp;<font size="5" color="red" th:text="${room.number}"></font>&nbsp;人&nbsp;&nbsp;&nbsp;&nbsp;
+							评分：<span class="ui star rating" th:data-rating="${room.grade}" data-max-rating="5"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+							价格：&nbsp;<font size="4" color="orange" th:text="${room.price}"></font>&nbsp;元/月&nbsp;&nbsp;
+							&nbsp;&nbsp;描述：<font size="3" color="teal" th:text="${room.describe}"></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="createTime" th:value="${old.createTime}">
+			<!--备注-->
+			<div class="field">
+				<label>备注</label>
+				<textarea name="describe" placeholder="请输入备注信息..." th:text="${old.describe}"></textarea>
+			</div>
+			<hr color="#00B5AD">
+			<div class="ui error message"></div>
+			<!--确认框-->
+			<div class="ui container center aligned">
+				<button class="ui teal button" type="submit">编辑完成</button>
+			</div>
+		</form>
+	</div>
+</div><br><br><br><br><br><br><br>
+
+</body>
+<script>
+	<!--时间选择-->
+	layui.use('laydate', function(){
+		var laydate = layui.laydate;
+
+		//常规用法
+		laydate.render({
+			elem: '#test1'
+		});
+	});
+	$('.ui.dropdown')
+			.dropdown()
+	;
+	<!--评分-->
+	$('.ui.rating')
+			.rating("disable")
+	;
+	<!--提示消息-->
+	$(".message .close")
+			.on("click",function(){
+				$(this)
+						.closest(".message")
+						.transition("fade");
+			});
+
+	$(".ui.form").form({//非空验证
+		fields: {
+			name: {
+				identifier: "name",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入老人名字"
+				}]
+			},
+			displayMessage: {
+				identifier: "age",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入老人年龄"
+				}]
+			},
+			sex: {
+				identifier: "sex",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入老人性别"
+				}]
+			},
+			rid: {
+				identifier: "rid",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请选择房间"
+				}]
+			},
+			nid: {
+				identifier: "nid",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请选择护理人员"
+				}]
+			},
+			status: {
+				identifier: "status",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入老人健康状态评分"
+				}]
+			},
+			number: {
+				identifier: "number",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入老人监护人电话号码"
+				}]
+			},
+			address: {
+				identifier: "address",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入监护人家庭地址"
+				}]
+			},
+			describe: {
+				identifier: "describe",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入老人描述"
+				}]
+			},
+		}
+	});
+</script>
+</html>

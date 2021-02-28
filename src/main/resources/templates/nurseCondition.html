@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>护理人员详细信息</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+		<link rel="stylesheet" href="../static/css/mine.css" th:href="@{/css/mine.css}">
+		<script type="text/javascript" src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+	</head>
+	<body>
+		<!--头部-->
+		<div class="ui m-container-small m-margin-tb-large m-padded-lr-reponsive m-opacity-no m-text-spaced-big">
+			<div class="ui two pointing menu m-shadow-small ">
+				<a href="#" th:href="@{/}" class="item"><i class="big home teal icon"></i><span style="color: #00B5AD; ">首页</span></a>
+				<h3 class="ui teal active header item right"><i class=" user icon"></i>护理人员详细信息</h3>
+			</div>
+		</div>
+		<!--中间内容-->
+		<div class="ui container m-padded-tb-big m-opacity-no">
+			<div class="ui segment">
+				<div class="ui teal segment m-text-spaced-big">
+				  <img class="ui small left floated image" src="https://picsum.photos/100/100">
+					<p><h3><font>编号：</font><font color="teal" style="vertical-align: inherit;" th:text="${nurse.nurseId}">
+					姓名：xxx
+				</font></h3></p>
+				  <p><h3><font>姓名：</font><font color="teal" style="vertical-align: inherit;" th:text="${nurse.name}">
+						姓名：xxx
+				  </font></h3></p>
+				  <p><h3><font>年龄：</font><font color="teal" style="vertical-align: inherit;" th:text="${nurse.age}">
+				  					年龄：xxx
+				  </font></h3></p>
+				  <p><h3><font>性别：</font><font color="teal" style="vertical-align: inherit;" th:text="${nurse.sex}">
+				  					性别：xxx
+				  </font></h3></p>
+				  <p><h3><font>电话：</font><font color="teal" style="vertical-align: inherit;" th:text="${nurse.number}">
+				  					电话：xxx
+				  </font></h3></p>
+				  <p><h3><font>家庭地址：</font><font color="teal" style="vertical-align: inherit;" th:text="${nurse.address}">
+				  					家庭地址：xxx
+				  </font></h3></p>
+				  <p><h3><font>负责的老人：</font><font color="teal" style="vertical-align: inherit;" th:each="old:${olds}" th:text="${old.id+' '+old.name}+' 、'">
+				  					负责的老人：xxx、xxx、xxx
+				  </font></h3></p>
+				  <p><h3><font>服务定价：</font><font color="#ff4500" style="vertical-align: inherit;" th:text="${nurse.price}+'元/年'">
+				  					服务定价：5000/年
+				  </font></h3></p>
+					<p><h3><font>注册时间：</font><font color="#teal" style="vertical-align: inherit;" th:text="${nurse.createTime}">
+				  </font></h3></p>
+				  <p><h3><font style="vertical-align: inherit;">
+				  					综合评价：<div class="ui star rating" th:data-rating="${nurse.grade}" data-max-rating="5"></div>
+				  </font></h3></p><hr color="#00B5AD">
+				</div>
+				<div class="ui segment m-text-spaced-big">
+					<div class="meta"><font size="4" style="vertical-align: inherit;"  th:text="'描述：'+${nurse.describe}">
+						备注：xxx
+					</font></div><hr color="#00B5AD">
+				</div>
+			</div>
+			
+		</div>
+	</body>
+	<script>
+		<!--评分-->
+		$('.ui.rating')
+				.rating('disable')
+		;
+
+		
+	</script>
+</html>

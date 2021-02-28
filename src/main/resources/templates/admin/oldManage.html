@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>老人信息管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/mine.css" th:href="@{/css/mine.css}">
+    <script type="text/javascript" src="../../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+</head>
+<body>
+<div class="pusher" th:style="@{background: url(/img/bg.jpg);}" style="background: url(../../static/img/bg.jpg);">
+    <!-- 导航 -->
+    <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small m-opacity-small">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">天怡养老信息系统后台</h2>
+                <a href="#" class="active m-item item"><i class="block big orange layout icon"></i>
+                    <font color=""> 功能</font>
+                </a>
+
+                <div class="right m-item item menu">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img class="ui avatar image" src="https://picsum.photos/100/100"/>
+                            lala
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </nav>
+
+    <!--头部-->
+    <div class="m-container-tiny m-padded-tb-large stackable">
+        <div class="ui container">
+            <!--导航-->
+            <div class="ui sticky m-opacity-no">
+                <div class="ui segment m-shadow-small m-padded-tb-tiny center aligned">
+                    <!--搜索-->
+                    <form name="search" action="#" th:action="@{/admin/oldSearch}" method="post">
+                        <div class="ui search">
+                            <div class="ui icon input">
+                                <input class="prompt" name="query" type="text" placeholder="name..." th:value="${query}">
+                                <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                            </div>
+                            <a href="#" th:href="@{/admin/oldManage}" class=""><i class="big undo teal icon"></i><font color="#00B5AD">全部</font></a>
+                            <div class="results"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--中间内容-->
+	<div class="ui container m-padded-lr-reponsive">
+        <div class="ui success message m-container-small" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示:</div>
+            <span th:text="${message}">恭喜，操作成功！</span><font th:unless="${#strings.isEmpty(message1)}">找到<font size="4" color="red" th:text="${message1}"></font>条记录！</font>
+        </div>
+		<div class="ui segments container m-text-spaced-big">
+			<div class="ui segment">
+				<div class="ui middle aligned two column grid">
+					<div class="column">
+						<h3 class="ui teal header">老人信息</h3>
+					</div>
+					<div class="right aligned column">
+						共<h2 class="ui orange header m-inline-block m-text-thin" th:text="${oldCount}">144</h2>条记录
+					</div>
+				</div>
+			</div>
+			<div class="ui accordion teal segment">
+				<div class="ui segments">
+					<div class="ui segment m-padded-tb-small" th:each="old : ${olds}">
+						<div class="title">
+							<div class=""><font color="red" th:text="${old.id}">
+							</font><font color="black" th:text="${old.name}"></font></div>
+						</div>
+						<div class="ui content">
+							<div class="ui center aligned segment m-padded-tb-mini">
+								<i class="angle large teal double up icon"></i>
+                                <a target="_blank" th:href="@{/admin/oldEdit/{id}(id=${old.id})}"><button class="ui blue button"><font>
+                                    编辑
+								</font></button></a>
+                                <a th:href="@{/admin/oldDelete/{id}(id=${old.id})}"><button class="ui red button"><font>
+									删除
+								</font></button></a><i class="big loading compass outline icon"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="ui   segment" >
+                <div class="ui middle aligned two column grid">
+                    <div class="left aligned column">
+                        <a href="#" th:href="@{/admin/old/pageLast/{num}(num=${page})}" th:unless="${page}==0"
+                           class="ui min teal basic button">上一页</a>
+                    </div>
+                    <div class="right aligned column">
+                        <a href="#" th:href="@{/admin/old/pageNext/{num}(num=${page})}" th:unless="${page}==${end}"
+                           class="ui min teal basic button">下一页</a>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="ui inverted vertical segment m-padded-tb-massive m-opacity-mini">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided mobile reversed stackable grid">
+
+                <div class="eight wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                    <div class="ui inverted link list m-text-thin m-text-spaced m-opacity-mini">
+                        <a href="" class="item">QQ:1569112659</a>
+                        <a href="" class="item">email:1569112659@qq.com</a>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">说明</h4>
+                    <div class="ui inverted link list">
+                        <p class="m-text-thin m-text-spaced m-opacity-mini">信息管理系统</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="m-text-thin m-text-spaced m-opacity-tiny">Edit 2020.12.20 - 2021.1.17</p>
+        </div>
+    </div>
+
+</div>
+
+<!--隐藏-->
+
+<div th:style="@{background: url(/img/bg2.jpeg);}" style="background: url(../../static/img/bg2.jpeg);" class="ui top sidebar segment ">
+    <div class="ui grid container center aligned stackable">
+        <div class="three wide column"><a th:href="@{/admin/}">
+            <button class="ui black button "><font style="vertical-align: inherit;">
+                <h3> 后台管理首页</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/oldManage}">
+            <button class="ui blue button "><font style="vertical-align: inherit;">
+                <h3> 老人信息管理</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/nurseManage}">
+            <button class="ui teal button "><font style="vertical-align: inherit;">
+                <h3>护理信息管理</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/roomManage}">
+            <button class="ui orange button "><font style="vertical-align: inherit;">
+                <h3>房间信息管理</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/costManage}">
+            <button class="ui red button "><font style="vertical-align: inherit;">
+                <h3>费用信息管理</h3>
+            </font></button></a>
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+<script>
+    <!--下拉-->
+    $(".ui.dropdown").dropdown();
+    <!--菜单-->
+    $('.active.item').click(function () {
+        $('.sidebar')
+            .sidebar({
+                transition: 'slide along'
+            })
+            .sidebar('toggle')
+        ;
+    })
+    $('.ui.accordion').accordion('refresh');
+    <!--消息框关闭-->
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade')
+            ;
+        })
+    ;
+</script>
+</html>

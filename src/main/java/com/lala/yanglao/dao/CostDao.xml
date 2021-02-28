@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lala.yanglao.dao.CostDao">
+    <resultMap id="BaseResultMap" type="com.lala.yanglao.model.Cost">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="oldId" jdbcType="VARCHAR" property="oldId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="nCost" jdbcType="INTEGER" property="nCost"/>
+        <result column="rCost" jdbcType="VARCHAR" property="rCost"/>
+        <result column="extraCharges" jdbcType="INTEGER" property="extraCharges"/>
+        <result column="allCost" jdbcType="INTEGER" property="allCost"/>
+        <result column="createTime" jdbcType="INTEGER" property="createTime"/>
+        <result column="days" jdbcType="INTEGER" property="days"/>
+        <result column="day" jdbcType="INTEGER" property="day"/>
+        <result column="allCharge" jdbcType="INTEGER" property="allCharge"/>
+        <result column="charge" jdbcType="INTEGER" property="charge"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    </sql>
+
+    <select id="selectCostLists" resultMap="BaseResultMap">
+        select
+            a.id,a.name,a.createTime,b.price as nCost,c.price as rCost,a.charge,d.extraCharges,datediff(current_date(),a.createTime) as days,a.repayDate as day,
+            a.charge+datediff(current_date(),a.updateCostTime)*(b.price+c.price+d.extraCharges)/365 as allCost,a.allCharge+datediff(current_date(),a.updateCostTime)*(b.price+c.price+d.extraCharges)/365 as allCharge
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            a.rid=c.id
+         join
+            t_extracost d
+        order by
+            a.id asc
+        limit #{num},10
+    </select>
+    <update id="updateRepayDateToCurrent">
+        update
+            t_old
+        set
+           repayDate = current_date()
+        where
+            id=#{oldId}
+    </update>
+    <update id="updateRepayDate">
+        update
+            t_old
+        set
+           repayDate = #{date}
+        where
+            id=#{oldId}
+    </update>
+    <update id="updateChargeByOldId">
+        update
+            t_old
+        set
+            charge=#{charge}
+        where
+            id=#{id}
+    </update>
+    <update id="updateAllChargeByOldId">
+        update
+            t_old
+        set
+            allCharge=#{allCharge}
+        where
+            id=#{id}
+    </update>
+    <update id="updateUpdateCostTimeToCurrent">
+        update
+            t_old
+        set
+           updateCostTime = current_date()
+        where
+            id=#{oldId}
+    </update>
+    <select id="selectByNameOrOldId" resultMap="BaseResultMap">
+        select
+            a.id,a.name,a.createTime,b.price as nCost,c.price as rCost,a.charge,d.extraCharges,datediff(current_date(),a.createTime) as days,a.repayDate as day,
+            a.charge+datediff(current_date(),a.updateCostTime)*(b.price+c.price+d.extraCharges)/365 as allCost,a.allCharge+datediff(current_date(),a.updateCostTime)*(b.price+c.price+d.extraCharges)/365 as allCharge
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            a.rid=c.id
+         join
+            t_extracost d
+        where
+            a.name like "%"#{query}"%"
+        or
+            a.id like "%"#{query}"%"
+    </select>
+    <select id="selectByOldId" resultMap="BaseResultMap">
+        select
+            a.id,a.name,a.createTime,b.price as nCost,c.price as rCost,a.charge,d.extraCharges,datediff(current_date(),a.createTime) as days,a.repayDate as day,
+            a.charge+datediff(current_date(),a.updateCostTime)*(b.price+c.price+d.extraCharges)/365 as allCost,a.allCharge+datediff(current_date(),a.updateCostTime)*(b.price+c.price+d.extraCharges)/365 as allCharge
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            a.rid=c.id
+         join
+            t_extracost d
+        where
+            a.id = #{id}
+    </select>
+    <select id="selectExtraCharges" resultType="double">
+        select
+            extraCharges
+        from
+            t_extracost
+    </select>
+    <update id="updateExtraCharges">
+        update
+            t_extracost
+        set
+            extraCharges=#{extraCharges}
+    </update>
+</mapper>

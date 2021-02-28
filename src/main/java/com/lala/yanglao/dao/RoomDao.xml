@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lala.yanglao.dao.RoomDao">
+    <resultMap id="BaseResultMap" type="com.lala.yanglao.model.Room">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="roomNumber" jdbcType="VARCHAR" property="roomNumber"/>
+        <result column="roomType" jdbcType="INTEGER" property="roomType"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="describe" jdbcType="INTEGER" property="describe"/>
+        <result column="grade" jdbcType="INTEGER" property="grade"/>
+    </resultMap>
+    <resultMap id="OldsMap" type="com.lala.yanglao.model.Old">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="roomNumber" jdbcType="INTEGER" property="roomNumber"/>
+        <result column="rid" jdbcType="INTEGER" property="rid"/>
+        <result column="nid" jdbcType="INTEGER" property="nid"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="address" jdbcType="INTEGER" property="address"/>
+        <result column="nurseName" jdbcType="INTEGER" property="nurseName"/>
+        <result column="nurseNumber" jdbcType="INTEGER" property="nurseNumber"/>
+        <result column="describe" jdbcType="INTEGER" property="describe"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.id,a.roomNumber,a.roomType,a.number,a.price,a.describe,a.grade
+    </sql>
+    <select id="selectByPrimary" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"></include>
+        from
+            t_room a
+        where
+            id=#{id}
+    </select>
+    <select id="selectOldsByPrimary" resultMap="OldsMap">
+        select
+            b.id,b.name
+        from
+            t_room a
+        join
+            t_old b
+        on
+            a.id=b.rid
+        where
+            a.id=#{id}
+    </select>
+    <select id="selectRoomNoFull" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"></include>
+        from
+            t_room a
+        where
+            a.number &lt; a.roomType
+
+    </select>
+    <update id="updateRoomOldNumberById">
+        update
+            t_room
+        set
+            number =number +1
+        where
+            id=#{id}
+    </update>
+    <update id="updateRoomOldNumberDecreaseById">
+        update
+            t_room
+        set
+            number =number -1
+        where
+            id=#{id}
+    </update>
+    <update id="updateRoom">
+        update
+            t_room a
+        set
+            a.id=#{id},a.roomNumber=#{roomNumber},a.roomType=#{roomType},
+            a.number=#{number},a.price=#{price},a.describe=#{describe},a.grade=#{grade}
+        where
+            a.id=#{id}
+    </update>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"></include>
+        from
+            t_room a
+    </select>
+    <select id="selectAllOnLimit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        t_room a
+        limit
+        #{num},10
+    </select>
+    <select id="selectCountOfRooms" resultType="int">
+        select
+            count(id)
+        from
+            t_room
+    </select>
+    <select id="selectTypeNumber" resultMap="BaseResultMap">
+        select
+            roomType,count(roomType)as number
+        FROM
+            t_room
+        group by
+            roomType
+
+    </select>
+    <select id="selectAllByTypeOrStatus" parameterType="com.lala.yanglao.vo.RoomQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"></include>
+        from
+            t_room a
+        <trim prefix="where" suffixOverrides="and">
+        <if test="roomType != null">
+            a.roomType=#{roomType} and
+        </if>
+        <if test="checkbox != false">
+            a.roomType &gt; a.number
+        </if>
+        </trim>
+    </select>
+    <select id="selectByRoomNumber" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"></include>
+        from
+            t_room a
+        where
+             a.roomNumber like "%"#{query}"%"
+    </select>
+    <insert id="insertRoom">
+        insert into
+            t_room (roomNumber,roomType,grade,price,`describe`)
+        values
+            (#{roomNumber},#{roomType},#{grade},#{price},#{describe})
+    </insert>
+    <delete id="deleteRoom">
+        delete from
+            t_room
+        where
+            id=#{id}
+    </delete>
+</mapper>

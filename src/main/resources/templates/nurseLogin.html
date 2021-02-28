@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>护理注册</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+	<link rel="stylesheet" href="../static/css/mine.css" th:href="@{/css/mine.css}">
+	<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+	<script src="https://www.layuicdn.com/layui/layui.js"></script>
+	<script type="text/javascript" src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+	<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+	<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<!--头部-->
+<div class="ui m-container-small m-margin-tb-large m-padded-lr-reponsive m-opacity-no m-text-spaced-big">
+	<div class="ui two pointing menu m-shadow-small ">
+		<a href="#" th:href="@{/}" class="item"><i class="big home teal icon"></i><span style="color: #00B5AD; ">首页</span></a>
+		<h3 class="ui teal active header item right"><i class=" user icon"></i>添加护理</h3>
+	</div>
+</div></div>
+<!--中间内容-->
+<div class="ui container segment m-opacity-no m-text-spaced-big stackable">
+	<a th:href="@{/nurseLogin}"><div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+		<i class="close icon"></i>
+		<div class="header">提示:</div>
+		<p th:text="${message}">恭喜，操作成功！</p>
+	</div></a>
+	<div class="ui teal segment">
+		<form class="ui form" method="post" action="#" th:action="@{/nurseRegister}">
+			<div class="field">
+				<label>编号</label>
+				<input type="text" name="nurseId" placeholder="编号for example：001">
+			</div>
+			<div class="field">
+				<label>姓名</label>
+				<input type="text" name="name" placeholder="姓名">
+			</div>
+			<div class="two fields">
+				<div class="field">
+					<!--性别-->
+					<label>性别</label>
+					<div class="ui selection dropdown">
+						<input type="hidden" name="sex">
+						<i class="dropdown icon"></i>
+						<div class="default text">性别</div>
+						<div class="menu">
+							<div class="item" data-value="男">男</div>
+							<div class="item" data-value="女">女</div>
+						</div>
+					</div>
+				</div>
+				<div class="field right">
+					<!--年龄-->
+					<label>年龄</label>
+						<input type="text" name="age" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="3" placeholder="age">
+				</div>
+			</div>
+			<!--联系人电话-->
+			<div class="field">
+				<label>电话</label>
+				<input type="text" name="number" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="11" placeholder="电话">
+			</div>
+
+			<!--家庭住址-->
+			<div class="field">
+				<label>家庭住址</label>
+				<input type="text" name="address" maxlength="100" placeholder="地址">
+			</div>
+			<!--预测评星-->
+			<div class="field">
+				<label>预测评星</label>
+				<div class="ui fluid selection dropdown">
+					<input type="hidden" name="grade">
+					<i class="dropdown icon"></i>
+					<div class="default text">预测评星</div>
+					<div class="menu">
+						<div class="item ui stackable" data-value="1">
+							<i class="doctor teal icon"></i>
+							评分：<span class="ui star rating" data-rating="1" data-max-rating="5"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<font size="4" color="orange">1星</font>
+						</div>
+						<div class="item ui stackable" data-value="2">
+							<i class="doctor teal icon"></i>
+							评分：<span class="ui star rating" data-rating="2" data-max-rating="5"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<font size="4" color="orange">2星</font>
+						</div>
+						<div class="item ui stackable" data-value="3">
+							<i class="doctor teal icon"></i>
+							评分：<span class="ui star rating" data-rating="3" data-max-rating="5"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<font size="4" color="orange">3星</font>
+						</div>
+						<div class="item ui stackable" data-value="4">
+							<i class="doctor teal icon"></i>
+							评分：<span class="ui star rating" data-rating="4" data-max-rating="5"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<font size="4" color="orange">4星</font>
+						</div>
+						<div class="item ui stackable" data-value="5">
+							<i class="doctor teal icon"></i>
+							评分：<span class="ui star rating" data-rating="5" data-max-rating="5"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<font size="4" color="orange">5星</font>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="field">
+				<label>注册时间</label>
+				<div class="layui-form">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<input type="text" name="createTime" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--价格-->
+			<div class="field">
+				<label>价格</label>
+				<input type="text" name="price" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="6" placeholder="定价">
+			</div>
+			<!--备注-->
+			<div class="field">
+				<label>描述</label>
+				<textarea name="describe" placeholder="请输入备注信息..."></textarea>
+			</div>
+			<hr color="#00B5AD">
+			<div class="ui error message"></div>
+			<!--确认框-->
+			<div class="ui container center aligned">
+				<button class="ui teal button" type="submit">提交</button>
+			</div>
+		</form>
+	</div>
+</div><br><br><br><br><br><br><br>
+
+</body>
+<script>
+	<!--时间选择-->
+	layui.use('laydate', function(){
+		var laydate = layui.laydate;
+
+		//常规用法
+		laydate.render({
+			elem: '#test1'
+		});
+	});
+	$('.ui.dropdown')
+			.dropdown()
+	;
+	<!--评分-->
+	$('.ui.rating')
+			.rating("disable")
+	;
+	<!--提示消息-->
+	$(".message .close")
+			.on("click",function(){
+				$(this)
+						.closest(".message")
+						.transition("fade");
+			});
+
+	$(".ui.form").form({//非空验证
+		fields: {
+			nurseId: {
+				identifier: "nurseId",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入编号"
+				}]
+			},
+			name: {
+				identifier: "name",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入护理名字"
+				}]
+			},
+			displayMessage: {
+				identifier: "age",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入护理年龄"
+				}]
+			},
+			sex: {
+				identifier: "sex",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入护理性别"
+				}]
+			},
+			price: {
+				identifier: "price",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入定价"
+				}]
+			},
+			grade: {
+				identifier: "grade",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请选择星评"
+				}]
+			},
+			number: {
+				identifier: "number",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入电话号码"
+				}]
+			},
+			address: {
+				identifier: "address",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入家庭地址"
+				}]
+			},
+			createTime: {
+				identifier: "createTime",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入注册时间"
+				}]
+			},
+			describe: {
+				identifier: "describe",
+				rules: [{
+					type: "empty",
+					prompt: "提示：请输入描述"
+				}]
+			},
+		}
+	});
+</script>
+</html>

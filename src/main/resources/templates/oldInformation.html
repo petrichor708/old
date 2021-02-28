@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>老人信息</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/mine.css" th:href="@{/css/mine.css}">
+    <script type="text/javascript" src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+</head>
+<body onload="A()">
+<div class="ui small sidebar inverted vertical menu" style="font-size: medium">
+    <a style="color: #00B5AD;font-size: large" class="header item">
+        <span><i class="large loading snowflake outline icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天怡</span>
+    </a>
+    <a href="#" th:href="@{/login}" class="active teal right item"><i class="user icon"></i>后台登录</a>
+    <a style="" th:href="@{/}"  class=" item">
+        <span><i class=" large home icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span>
+    </a>
+    <a style="" th:href="@{/oldInformation}"  class="active item">
+        <span><i class=" large users icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;老人信息</span>
+    </a>
+    <a style="" th:href="@{/oldLogin}"  class=" item">
+        <span><i class=" large user plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;老人注册</span>
+    </a>
+    <a style="" th:href="@{/roomInformation}"  class=" item">
+        <span><i class=" large hotel icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;房间信息</span>
+    </a>
+    <a style="" th:href="@{/nurseInformation}"  class=" item">
+        <span><i class=" large doctor icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;护理人员</span>
+    </a>
+    <a style="" th:href="@{/nurseLogin}"  class=" item">
+        <span><i class=" large user plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加护理</span>
+    </a>
+    <a style="" th:href="@{/roomLogin}"  class=" item">
+        <span><i class=" large plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加房间</span>
+    </a>
+    <a style="" th:href="@{/costInformation}"  class=" item">
+        <span><i class=" large dollar icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费用查询</span>
+    </a>
+</div>
+<div class="pusher" th:style="@{background: url(/img/bg.jpg);}" style="background: url(../static/img/bg.jpg);">
+    <!-- 导航 -->
+    <div class="ui inverted segment m-padded-tb-tiny m-opacity-small">
+        <div class="ui container">
+            <div class="ui inverted secondary menu">
+                <a class="header item"><font style="vertical-align: inherit;"><p><font color="teal" size="5" style="vertical-align: inherit;">天怡</font>
+                </p></font></a>
+                <a id="menu" class="item"><i class="bars icon"></i>菜单</font></a>
+
+            </div>
+        </div>
+    </div>
+    <div class="m-container-tiny m-padded-tb-large stackable">
+        <div class="ui container">
+            <!--导航-->
+            <div class="ui sticky m-opacity-no">
+                <div class="ui segment m-shadow-small m-padded-tb-tiny center aligned">
+                    <!--搜索-->
+                    <form name="search" action="#" th:action="@{/oldSearch}" method="post">
+                        <div class="ui search">
+                            <span class="ui icon input">
+                                <input class="prompt" name="query" type="text" placeholder="name..."th:value="${query}">
+                                <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                            </span>&nbsp;&nbsp;&nbsp;
+                            <a href="#" th:href="@{/oldInformation}">
+                                <i class="big undo teal icon"></i>
+                                <font color="#00B5AD">全部</font>
+                            </a>
+                            <div class="results"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--中间内容-->
+
+    <div class="m-container-large m-padded-tb m-padded-lr m-text-spaced-big">
+        <div class="ui success message m-container-small" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示:</div>
+            <span th:text="${message}">恭喜，操作成功！</span>找到<font size="4" color="red" th:text="${message1}"></font>条记录！
+        </div>
+        <div class="ui grid stackable">
+            <!--第一个-->
+            <div class="ui center aligned three wide column " th:each="old : ${olds}">
+
+                <div class="ui shape">
+                    <div class="sides">
+                        <!--老人-->
+                        <div class="side active">
+                            <div class="ui center segments">
+                                <!--卡片-->
+                                <a href="#" target="_blank" th:href="@{oldCondition/{id}(id=${old.id})}">
+                                    <img th:if="${old.sex}=='男'" class="ui rounded image" src="../static/img/gold.jpg" th:src="@{/img/gold.jpg}">
+                                    <img th:if="${old.sex}=='女'" class="ui rounded image" src="../static/img/nold.jpg" th:src="@{/img/nold.jpg}">
+                                </a>
+                                <div class="ui segment teal content m-opacity-mini">
+                                    <a href="#" target="_blank" th:href="@{oldCondition/{id}(id=${old.id})}">
+                                        <div class="ui teal animated fade fluid button" tabindex="0">
+                                            <div class="visible content">
+                                                <font style="vertical-align: inherit;" th:text="${old.name}"><i class="user icon"></i>老人名字</font>
+                                            </div>
+                                            <div class="hidden content">
+                                                <font style="vertical-align: inherit;"><i class="user icon"></i>详细信息</font>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--护理人员-->
+                        <div class="side">
+                            <div class="ui center segments">
+                                <div class="ui segment m-padded-tb-tiny">
+                                    <div class="ui segment teal m-padded-tb-small">
+                                        <font color="teal" style="vertical-align: inherit;"><i class="user icon"></i>护理人员</font>
+                                    </div>
+                                </div>
+                                <a href="#" target="_blank" th:href="@{/nurseCondition/{id}(id=${old.nid})}">
+                                    <img class="ui rounded image" src="../static/img/nurse.jpg"
+                                         th:src="@{/img/nurse.jpg}">
+                                </a>
+                                <div class="ui segment content m-padded-tb-tiny">
+                                    <a href="#" target="_blank" th:href="@{/nurseCondition/{id}(id=${old.nid})}"
+                                       class="ui header teal" th:text="${old.nurseId}+'--'+${old.nurseName}"><font
+                                            style="vertical-align: inherit;"><i class="doctor icon"></i>xxx</font></a>
+                                    <hr color="#00B5AD"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!--健康情况-->
+                        <div class="side">
+                            <div class="ui segments">
+                                <div class="ui segment">
+                                    <div class="ui teal segment m-padded-tb-small">
+                                        <font color="orangered">老人健康情况</font>
+                                        <i class="green bar chart icon"></i>
+                                    </div>
+                                </div>
+                                <div class="ui segment m-padded-tb-big">
+                                    <div class="ui indicating progress" th:data-percent="${old.status}" id="example1">
+                                        <div class="bar"></div>
+                                        <div class="label m-text-spaced-big" th:text="${old.status}+'%'">74%</div>
+                                    </div>
+                                </div>
+                                <div class="ui segment m-padded-tb">
+                                        <i class="large black first aid icon"></i>
+                                        <i class="large red frown icon"></i>
+                                        <i class="large orange meh icon"></i>
+                                        <i class="large green smile icon"></i>
+                                    <hr color="#00B5AD"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!--房间-->
+                        <div class="side">
+                            <div class="ui segments">
+                                <div class="ui segment">
+                                    <div class="ui segment">
+                                        <font style="vertical-align: inherit;"><i class="orange big home icon"></i>老人所在房间</font>
+                                    </div>
+                                </div>
+                                <div class="ui segment"><br>
+                                    <a href="#" target="_blank" th:href="@{/roomCondition/{id}(id=${old.rid})}">
+                                        <button class="ui fluid huge orange basic button">
+                                            <h1 class=" m-text-spaced-big">
+                                                <font color="orangered" th:text="${old.roomNumber}">01</font>
+                                            </h1>
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="ui segment">
+                                    <hr color="orangered">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <br><br><br><br><br><br><br>
+    </div>
+    <!--下侧内容-->
+    <div class="m-bottom">
+        <div class="ui segment center aligned m-padded-tb-tiny m-opacity-mini">
+            <div>
+
+                <div class="ui teal animated button two" tabindex="0">
+                    <div class="visible content"><font style="vertical-align: inherit;"><font
+                            style="vertical-align: inherit;">下转</font></font></div>
+                    <div class=" hidden content">
+                        <i class=" arrow down icon"></i>
+                    </div>
+                </div>
+                <div class="ui teal animated button three" tabindex="0">
+                    <div class="visible content"><font style="vertical-align: inherit;"><font
+                            style="vertical-align: inherit;">左转</font></font></div>
+                    <div class="hidden content">
+                        <i class="arrow left icon"></i>
+                    </div>
+                </div>
+                <div class="ui teal animated fade button four" tabindex="0">
+                    <div class="visible content">
+                        <i class="loading refresh icon"></i>
+                    </div>
+                    <div class="hidden content">
+                        <i class="loading world icon"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    <!--导航-->
+    $('.ui.sticky')
+        .sticky({bottomOffset: 50})
+    ;
+
+    <!--按钮two-->
+    $('.animated.button.two').click(function () {
+        $('.shape').shape('flip up');
+    })
+    <!--按钮three-->
+    $('.animated.button.three').click(function () {
+        $('.shape').shape('flip right');
+    })
+    <!--按钮four-->
+    $('.animated.button.four').click(function () {
+        $('.shape').shape('flip right');
+        $('.shape').shape('flip right');
+        $('.shape').shape('flip right');
+        $('.shape').shape('flip right');
+    })
+
+    <!--按钮all-->
+    function A() {
+        $('.shape').shape('flip over');
+        $('.shape').shape('flip over');
+        $('.shape').shape('flip back');
+        $('.shape').shape('flip back');
+    }
+
+    <!--健康进度条-->
+    $('.indicating.progress').progress();
+    <!--消息框关闭-->
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade')
+            ;
+        })
+    ;
+    <!--菜单-->
+    $('#menu').click(function () {
+        $('.sidebar')
+            .sidebar({
+                transition: 'scale down'
+            })
+            .sidebar('toggle')
+        ;
+    })
+</script>
+</html>

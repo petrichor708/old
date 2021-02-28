@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>后台主页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/mine.css" th:href="@{/css/mine.css}">
+    <script type="text/javascript" src="../../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+</head>
+<body>
+<div class="pusher" th:style="@{background: url(/img/bg.jpg);}" style="background: url(../../static/img/bg.jpg);">
+    <!-- 导航 -->
+    <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small m-opacity-small">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">天怡养老信息系统后台</h2>
+                <a href="#" class="active m-item item"><i class="block big orange layout icon"></i>
+                    <font color=""> 功能</font>
+                </a>
+
+                <div class="right m-item item  menu">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img class="ui avatar image" src="https://picsum.photos/100/100"/>
+                            <span th:text="${session.user}">lala</span>
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- 中间内容 -->
+    <div class="m-container m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui success large message">
+                <h3>Hi,</h3>
+                <P>welcome !</P>
+            </div>
+            <a href="#" class="active item">
+                <img src="https://picsum.photos/800/400" alt="" class="ui rounded bordered fluid image">
+            </a>
+
+        </div>
+    </div>
+	<br><br><br><br><br><br><br><br>
+    <div class="ui inverted vertical segment m-padded-tb-massive m-opacity-mini">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided mobile reversed stackable grid">
+
+                <div class="eight wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                    <div class="ui inverted link list m-text-thin m-text-spaced m-opacity-mini">
+                        <a href="" class="item">QQ:1569112659</a>
+                        <a href="" class="item">email:1569112659@qq.com</a>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <h4 class="ui inverted header m-text-thin m-text-spaced">说明</h4>
+                    <div class="ui inverted link list">
+                        <p class="m-text-thin m-text-spaced m-opacity-mini">信息管理系统</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="m-text-thin m-text-spaced m-opacity-tiny">Edit 2020.12.20 - 2021.1.17</p>
+        </div>
+    </div>
+</div>
+
+<!--隐藏-->
+
+<div th:style="@{background: url(/img/bg2.jpeg);}" style="background: url(../../static/img/bg2.jpeg);" class="ui top sidebar segment ">
+    <div class="ui grid container center aligned stackable">
+        <div class="three wide column"><a th:href="@{/admin/}">
+            <button class="ui black button "><font style="vertical-align: inherit;">
+                <h3> 后台管理首页</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/oldManage}">
+            <button class="ui blue button "><font style="vertical-align: inherit;">
+                <h3> 老人信息管理</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/nurseManage}">
+            <button class="ui teal button "><font style="vertical-align: inherit;">
+                <h3>护理信息管理</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/roomManage}">
+            <button class="ui orange button "><font style="vertical-align: inherit;">
+                <h3>房间信息管理</h3>
+            </font></button></a>
+        </div>
+        <div class="three wide column"><a th:href="@{/admin/costManage}">
+            <button class="ui red button "><font style="vertical-align: inherit;">
+                <h3>费用信息管理</h3>
+            </font></button></a>
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+<script>
+    $(".ui.dropdown").dropdown();
+    $('.active.item').click(function () {
+        $('.sidebar')
+            .sidebar({
+                transition: 'slide along'
+            })
+            .sidebar('toggle')
+        ;
+    })
+
+</script>
+</html>

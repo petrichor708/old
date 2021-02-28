@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>首页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/mine.css" th:href="@{/css/mine.css}">
+    <script type="text/javascript" src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+</head>
+<body onload="A()">
+<!-- 导航 -->
+<nav class="ui inverted attached segment m-opacity-small m-shadow-small stackable">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">天怡养老信息管理系统</h2>
+            <a href="#" target="_blank" th:href="@{/login}" class="active teal right item"><i class="user icon"></i>后台登录</a>
+        </div>
+    </div>
+</nav>
+<!-- 中间内容 -->
+<div class="m-container m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="eleven wide column">
+                <div class="ui segment">
+                    <img src="https://picsum.photos/800/600" alt="" class="ui rounded image"/>
+                </div>
+            </div>
+            <div class="five wide column">
+                <div class="ui segments">
+
+                    <div class="ui secondary segment">
+                        <div class="ui two column grid">
+                            <div class="column">
+                                <i class="block big teal layout icon"></i>
+                            </div>
+                            <div class="right aligned column m-text-spaced-big">
+                                <a data-tooltip="你随便乱点一下吧  /doge" data-position="top right"><span style="color: #00B5AD; ">帮助</span><i class="help icon teal"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui teal segment center aligned">
+                        <div class="ui segment">
+                            <p><a href="#" th:href="@{/oldInformation}" target="_blank">
+                                <button class="ui fluid huge teal basic button"><h3><span>老人信息</span></h3></button>
+                            </a></p>
+                            <p><a href="#" th:href="@{/oldLogin}" target="_blank">
+                                <button class="ui fluid huge teal basic button"><h3><font>老人注册</font></h3></button>
+                            </a></p>
+                            <p><a href="#" th:href="@{/roomInformation}" target="_blank">
+                                <button class="ui fluid huge teal basic button"><h3><font>房间信息</font></h3></button>
+                            </a></p>
+                            <p><a href="#" th:href="@{/nurseInformation}" target="_blank">
+                                <button class="ui fluid huge teal basic button"><h3><font>护理人员</font></h3></button>
+                            </a></p>
+                            <p><a href="#" th:href="@{/nurseLogin}" target="_blank">
+                                <button class="ui fluid huge teal basic button"><h3><font>添加护理</font></h3></button>
+                            </a></p>
+                            <p><a href="#" th:href="@{/roomLogin}" target="_blank">
+                                <button class="ui fluid huge teal basic button"><h3><font>添加房间</font></h3></button>
+                            </a></p>
+                            <p><a href="#" th:href="@{/costInformation}" target="_blank">
+                                <button class="ui fluid huge teal basic button"><h3><font>费用查询</font></h3></button>
+                            </a></p>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- 中间内容（头像） -->
+
+                <div class="m-container m-padded-tb-big">
+                    <div class="ui container stackable">
+                        <div class="ui two column grid">
+                            <div class="center aligned column">
+                                <a data-tooltip="是谁在唱歌？" data-position="top right">
+                                    <i class="big icons">
+                                        <i class="big teal loading circle notched icon"></i>
+                                        <i class="user teal icon"></i>
+                                    </i>
+                                </a>
+                            </div>
+                            <div class=" m-container aligned column"  data-tooltip="要联系作者？ʕ•̫͡•ʕ*̫͡*ʕ•͓͡•ʔ-̫͡-ʕ•̫͡•ʔ*̫͡*ʔ-̫͡-ʔ" data-position="top right">
+                                <div class="ui horizontal list">
+                                    <div class="ui item right" >
+                                        <img id="Button" class="ui mini circular image" src="https://picsum.photos/600/600">
+                                        <div class="content">
+                                            <div id="Button1" class="ui sub header">
+                                                <font color="orangered" style="vertical-align: inherit;">wjm</font>
+                                            </div>
+                                            <font id="Button2" style="vertical-align: inherit;"><font color="black" style="vertical-align: inherit;">
+                                                开发者
+                                            </font></font></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui payQR flowing popup transition hidden">
+                                <div class="ui orange basic label">
+                                    <div class="ui images" style="font-size: inherit !important;">
+                                        <div class="image">
+                                            <img src="../static/img/wechat.jpg" th:src="@{/img/wechat.jpg}" alt="" class="ui rounded bordered image" style="width:120px">
+                                            <div>微信</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<footer class="ui inverted vertical segment m-padded-tb-massive m-opacity-mini">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided mobile reversed stackable grid">
+
+            <div class="eight wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced m-opacity-mini">
+                    <a href="" class="item">QQ:1569112659</a>
+                    <a href="" class="item">email:1569112659@qq.com</a>
+                </div>
+            </div>
+            <div class="eight wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">说明</h4>
+                <div class="ui inverted link list">
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">养老信息管理系统</p>
+                </div>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Edit 2020.12.20 - 2021.1.17</p>
+    </div>
+</footer>
+<script>
+
+    $('.big.icons').click(function () {
+        // default everything
+        $('.horizontal.list')
+            .transition('fly right')
+
+        ;
+    })
+
+    function A() {
+        $('.horizontal.list')
+            .transition()
+    }
+    $("#Button,#Button1,#Button2").popup({
+        popup: $(".payQR.popup"),
+        on: 'click',
+        position: 'bottom center'
+    });
+</script>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>请求无法定位</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/mine.css" th:href="@{/css/mine.css}">
+    <script type="text/javascript" src="../../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui small sidebar inverted vertical menu" style="font-size: medium">
+    <a style="color: #00B5AD;font-size: large" class="header item">
+        <span><i class="large loading snowflake outline icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天怡</span>
+    </a>
+    <a href="#" th:href="@{/login}" class="active teal right item"><i class="user icon"></i>后台登录</a>
+    <a style="" th:href="@{/}" class=" item">
+        <span><i class=" large home icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页</span>
+    </a>
+    <a style="" th:href="@{/oldInformation}" class=" item">
+        <span><i class=" large users icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;老人信息</span>
+    </a>
+    <a style="" th:href="@{/oldLogin}" class=" item">
+        <span><i class=" large user plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;老人注册</span>
+    </a>
+    <a style="" th:href="@{/roomInformation}" class=" item">
+        <span><i class=" large hotel icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;房间信息</span>
+    </a>
+    <a style="" th:href="@{/nurseInformation}" class=" item">
+        <span><i class=" large doctor icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;护理人员</span>
+    </a>
+    <a style="" th:href="@{/nurseLogin}" class=" item">
+        <span><i class=" large user plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加护理</span>
+    </a>
+    <a style="" th:href="@{/roomLogin}" class=" item">
+        <span><i class=" large plus icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加房间</span>
+    </a>
+    <a style="" th:href="@{/costInformation}" class=" item">
+        <span><i class=" large dollar icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费用查询</span>
+    </a>
+</div>
+<div class="pusher" th:style="@{background: url(/img/bg.jpg);}" style="background: url(../../static/img/bg.jpg);">
+    <!-- 导航 -->
+    <div class="ui inverted segment m-padded-tb-tiny m-opacity-small">
+        <div class="ui container">
+            <div class="ui inverted secondary menu">
+                <a class="header item"><font style="vertical-align: inherit;"><p><font color="teal" size="5"
+                                                                                       style="vertical-align: inherit;">天怡</font>
+                </p></font></a>
+                <a id="menu" class="item"><i class="bars icon"></i>菜单</font></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-container-small m-padded-tb-massive">
+    <div class="ui error message">
+        <div class="ui contianer m-padded-tb-huge">
+            <h2>404</h2>
+            <p>对不起，你访问的资源不存在！</p>
+        </div>
+    </div>
+</div>
+</body>
+<footer class="ui inverted vertical segment m-padded-tb-massive m-opacity-mini">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided mobile reversed stackable grid">
+
+            <div class="eight wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced m-opacity-mini">
+                    <a href="" class="item">QQ:1569112659</a>
+                    <a href="" class="item">email:1569112659@qq.com</a>
+                </div>
+            </div>
+            <div class="eight wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">说明</h4>
+                <div class="ui inverted link list">
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">信息管理系统</p>
+                </div>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Edit 2020.12.20 - 2021.1.17</p>
+    </div>
+</footer>
+<script>
+    <!--
+    消息框关闭-->
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade')
+            ;
+        })
+    ;
+    <!--菜单-->
+    $('#menu').click(function () {
+        $('.sidebar')
+            .sidebar({
+                transition: 'scale down'
+            })
+            .sidebar('toggle')
+        ;
+    })
+</script>
+</html>
+
+

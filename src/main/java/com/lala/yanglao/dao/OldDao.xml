@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lala.yanglao.dao.OldDao">
+    <resultMap id="BaseResultMap" type="com.lala.yanglao.model.Old">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="roomNumber" jdbcType="INTEGER" property="roomNumber"/>
+        <result column="rid" jdbcType="INTEGER" property="rid"/>
+        <result column="nid" jdbcType="INTEGER" property="nid"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="createTime" jdbcType="VARCHAR" property="createTime"/>
+        <result column="nurseName" jdbcType="VARCHAR" property="nurseName"/>
+        <result column="nurseId" jdbcType="INTEGER" property="nurseId"/>
+        <result column="nurseNumber" jdbcType="INTEGER" property="nurseNumber"/>
+        <result column="describe" jdbcType="VARCHAR" property="describe"/>
+        <result column="charge" jdbcType="INTEGER" property="charge"/>
+        <result column="allCharge" jdbcType="INTEGER" property="allCharge"/>
+        <result column="repayDate" jdbcType="VARCHAR" property="repayDate"/>
+        <result column="updateCostTime" jdbcType="VARCHAR" property="updateCostTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+
+    </sql>
+    <select id="selectCountOfOlds" resultType="int">
+        select
+            count(id)
+        from
+            t_old
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+            a.id, a.name, a.age, a.sex, a.rid,c.roomNumber,a.nid,
+               b.nurseId,a.status,a.number ,a.address,a.createTime,
+               b.name as nurseName,a.updateCostTime
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            a.rid=c.id
+        order by
+            a.id asc
+    </select>
+    <select id="selectAllOnLimit" resultMap="BaseResultMap">
+        select
+            a.id, a.name, a.age, a.sex, a.rid,c.roomNumber,a.nid,b.nurseId,a.status,a.number ,a.address,a.createTime,b.name as nurseName
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            a.rid=c.id
+        order by
+            a.id asc
+        limit #{num},10
+    </select>
+    <select id="selectByPrimary" resultMap="BaseResultMap">
+        select
+            a.id, a.name, a.age, a.sex, a.rid,a.nid,a.status,a.number ,a.address,a.createTime,b.name  as nurseName,b.number  as nurseNumber,a.describe,c.roomNumber,a.charge,a.allCharge,a.repayDate,a.updateCostTime
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            c.id=a.rid
+        where
+            a.id=#{id}
+    </select>
+    <select id="selectByName" resultMap="BaseResultMap">
+        select
+            a.id, a.name, a.age, a.sex, a.rid,c.roomNumber,a.nid,
+            b.nurseId,a.status,a.number ,a.address,a.createTime,
+            b.name as nurseName
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+             c.id=a.rid and a.name like "%"#{query}"%"
+    </select>
+    <select id="selectOldListByNurseId" resultMap="BaseResultMap">
+        select
+            a.id, a.name, a.age, a.sex, a.rid,a.nid,a.status,a.number ,a.address,a.createTime,b.name  as nurseName,b.number  as nurseNumber,a.describe,c.roomNumber,a.charge,a.allCharge,a.repayDate,a.updateCostTime
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            c.id=a.rid
+        where
+            b.id=#{id}
+    </select>
+    <select id="selectOldListByRoomId" resultMap="BaseResultMap">
+        select
+            a.id, a.name, a.age, a.sex, a.rid,a.nid,a.status,a.number ,a.address,a.createTime,b.name  as nurseName,b.number  as nurseNumber,a.describe,c.roomNumber,a.charge,a.allCharge,a.repayDate,a.updateCostTime
+        from
+            t_old a
+        join
+            t_nurse b
+        on
+            a.nid=b.id
+        join
+            t_room c
+        on
+            c.id=a.rid
+        where
+            c.id=#{id}
+    </select>
+    <insert id="insertOld" >
+        insert into
+            t_old (name,age,sex,rid,nid,status,number,address,`describe`,
+                   createTime,repayDate,updateCostTime)
+        values
+            (#{name},#{age},#{sex},#{rid},#{nid},#{status},#{number},
+             #{address},#{describe},#{createTime},#{createTime},#{createTime})
+    </insert>
+    <update id="updateOldById">
+        update
+            t_old
+        set
+            name=#{name},age=#{age},sex=#{sex},rid=#{rid},nid=#{nid},status=#{status},number=#{number},address=#{address},`describe`=#{describe},createTime=#{createTime}
+        where
+            id=#{id}
+    </update>
+    <delete id="deleteOldById">
+        delete from
+            t_old
+        where
+            id=#{id}
+    </delete>
+</mapper>
